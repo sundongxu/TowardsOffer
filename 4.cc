@@ -1,18 +1,23 @@
 /*
     题目：
-        
+        根据二叉树的中序与前序遍历序列重建此二叉树
     思路：
-        
+        前序遍历第一个结点即为根结点，在中序遍历序列中找到根结点位置
+        则其左边均为根结点的左子树上的结点，获取左子树长度，及其在前序遍历中的起始位置
+        右边均为根节点的右子树上的结点，获取右子树长度，及其在前序遍历中的起始位置
+        递归构建，每次传入递归函数的参数分别为：
+        当前要构造的树的前序序列的第一个结点位置与最后一个节点位置
+        当前要构造的树的中序序列的第一个结点位置与最后一个节点位置
+        在递归函数中，总是在中序序列中找到当前构造树的根结点位置，根据前序序列的第一个结点即根结点的元素值
 */
-**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
 class Solution
 {
   public:
