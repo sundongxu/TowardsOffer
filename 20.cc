@@ -1,5 +1,5 @@
 /*
-    题目：
+    题目：《剑指Offer-面试题22-栈的压入与弹出序列》
         输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序
         假设压入栈的所有数字均不相等
     思路：
@@ -14,6 +14,10 @@
         若栈顶元素不是出栈序列中的当前元素，则继续压栈，直到是为止，若元素已全部压栈，还是无法满足，则出栈序列不合法
         若栈顶元素就是出栈序列中的当前元素，则出栈，继续判断出栈序列的下一个位置的元素，直至出栈序列耗尽
 */
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
 class Solution
 {
   public:
@@ -21,23 +25,33 @@ class Solution
     {
         if (pushV.size() != popV.size())
             return false;
-        bool result = true;
         stack<int> s;
         int pushIdx = 0, popIdx = 0;
-        while(popIdx < popV.size())
+        while (popIdx < popV.size())
         {
-            while(s.empty() && pushIdx < pushV.size())
+            while (s.empty() && pushIdx < pushV.size())
                 s.push(pushV[pushIdx++]);
-            while(s.top() != popV[popIdx] && pushIdx < pushV.size())
+            while (s.top() != popV[popIdx] && pushIdx < pushV.size())
                 s.push(pushV[pushIdx++]);
-            if(pushIdx < pushV.size())
+            if (s.top() == popV[popIdx] && pushIdx <= pushV.size())
             {
                 s.pop();
                 popIdx++;
             }
             else
-                result = false;
+                return false;
         }
-        return result;
+        return true;
     }
 };
+
+int main()
+{
+    Solution s;
+    vector<int> pushV = {1, 2, 3, 4, 5};
+    vector<int> popV1 = {4, 5, 3, 2, 1};  // true
+    vector<int> popV2 = {4, 3, 5, 1, 2};  // false
+    cout << s.IsPopOrder(pushV, popV1) << endl;
+    cout << s.IsPopOrder(pushV, popV2) << endl;
+    return 0;
+}
